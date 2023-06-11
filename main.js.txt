@@ -1,0 +1,34 @@
+const Amplify = require('aws-amplify');
+
+const awsconfig = {
+  "aws_project_region": "ca-central-1",
+  "aws_cloud_logic_custom": [{
+    "name": "Notes-API",
+    "endpoint": "https://6qajtx0n4l.execute-api.ca-central-1.amazonaws.com/Notes",
+    "region": "ca-central-1",
+  }],
+};
+
+Amplify.default.configure(awsconfig);
+
+// Function to create a new note
+async function createNote() {
+  const noteDetails = {
+    body: "Hello, World",
+  };
+
+  const newNote = await Amplify.API.post('Notes-API', '/notes', {body: noteDetails});
+  
+  console.log(newNote);
+}
+
+// Function to list all notes
+async function listNotes() {
+  const notes = await Amplify.API.get('Notes-API', '/notes');
+  
+  console.log(notes);
+}
+
+// Call the functions
+createNote();
+listNotes();
